@@ -232,12 +232,12 @@
         <h4 class="section__description contact-me__description">Ficou interessado nos meus projetos? Sinta-se livre para me mandar um e-mail ou me contatar por outras redes-sociais indexadas no rodapé! </h4>
         <form class="contact-me__form">
             <label for="inp-name" class="contact-me__inp">
-                <input class='contact-me__input-text' type="text" id="inp-name" placeholder="&nbsp" name="name" autocomplete="off">
+                <input class='contact-me__input-text' type="text" id="inp-name" placeholder="&nbsp" name="name" required>
                 <span class="contact-me__label">name</span>
             </label>
 
             <label for="inp-name" class="contact-me__inp">
-                <input class='contact-me__input-text' type="text" id="inp-email" placeholder="&nbsp" name="email" autocomplete="off">
+                <input class='contact-me__input-text' type="text" id="inp-email" placeholder="&nbsp" name="email" required>
                 <span class="contact-me__label">email</span>
             </label>
 
@@ -286,9 +286,9 @@
                 email: inputs[1].value,
                 message: textarea.value
                 }),
-            })
-
-            alert("{{ mail_response }}")
+            }).done(
+                alert("{{ mail_response }}")
+            )
 
             inputs.forEach((e, index) => {
                 inputs[index].value = ""
