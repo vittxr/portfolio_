@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 4rem 0;
+    margin: 8rem 0;
 }
 
 .contact-me__title, 
@@ -91,7 +91,7 @@
 
 .contact-me__textarea {
     width: 70%;
-    height: 6rem;
+    height: 10rem;
     padding: 0;
     margin: 0.5rem 0;
     outline: none;

@@ -18,7 +18,7 @@ function isInViewport(itd, abt, skls, pjt, ctc) {
     let ctc_ = ctc.getBoundingClientRect();
       //propriedades da seções.
 
-    elementsInViewportStatus = []
+    let elementsInViewportStatus = []
       //Esse array armazena booleanos, informando se a seção está visivel na viewport. 
    
     //As variáveis abaixo armazenam um boleano, informando se a seção está visível ou não na viewport
@@ -27,10 +27,17 @@ function isInViewport(itd, abt, skls, pjt, ctc) {
                 itd_.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 itd_.right <= (window.innerWidth || document.documentElement.clientWidth)
    
-    abtIsInViewport = abt_.top >= 0 &&
-                    abt_.left >= 0 &&
-                    abt_.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                    abt_.right <= (window.innerWidth || document.documentElement.clientWidth) 
+    if (abt_.top <= window.innerHeight) {
+                abtIsInViewport = abt_.bottom >= 0 &&
+                                    abt_.right >= 0 &&
+                                    abt_.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                                    abt_.left <= (window.innerWidth || document.documentElement.clientWidth) 
+    } else {
+                abtIsInViewport = abt_.top >= 0 &&
+                                    abt_.left >= 0 &&
+                                    abt_.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                                    abt_.right <= (window.innerWidth || document.documentElement.clientWidth) 
+    }
 
     if (skls_.top <= window.innerHeight) {
     sklsIsInViewport = skls_.bottom >= 0 &&
@@ -51,13 +58,20 @@ function isInViewport(itd, abt, skls, pjt, ctc) {
                         pjt_.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                         pjt_.right <= (window.innerWidth || document.documentElement.clientWidth) 
 
+
     ctcIsInViewport = ctc_.top >= 0 &&
                         ctc_.left >= 0 &&
                         ctc_.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                         ctc_.right <= (window.innerWidth || document.documentElement.clientWidth)                
   
     elementsInViewportStatus.push(itdIsInViewport, abtIsInViewport, sklsIsInViewport, pjtIsInViewport, ctcIsInViewport)  
-    
+
+    //Tratamento de "bugs" específicos
+    if (elementsInViewportStatus[2] == true && elementsInViewportStatus[3] == true) {
+        elementsInViewportStatus[2] = false
+          //A navbar é pequena e relativamente simples, então dá para tratar o erro individualmente sem prejudicar o algoritmo. Nesse caso, o item "skills" e o "projetos" podem ambos ser true ao mesmo tempo.No único caso que isso acontece, precisa-se que a navbar deixe o item "projetos" ativo.
+    }
+
     return toggleNavbarActiveItem(elementsInViewportStatus)
 }
 
@@ -65,7 +79,7 @@ function toggleNavbarActiveItem(elementsInViewportStatus) {
     let elInVW = elementsInViewportStatus;
 
     var someItemIsActive = false;
-    var lastItemElement;
+    var lastActiveMobileItem, lastActiveDesktopItem;
     navbar_item.forEach((e, index) => {
         if (navbar_item[index].classList.contains("navbar__mobile-list-item--active") || 
             navbar_item[index].classList.contains("navbar__desktop-list-item--active")
@@ -79,7 +93,7 @@ function toggleNavbarActiveItem(elementsInViewportStatus) {
 
     //o loop abaixo muda o item ativado na navbar. Apenas um mode estar ativo. Por isso, na comparação, verifica-se o elemento está na viewport (elInVW[i] == true) e se someItemIsActive for false, isto é, se nenhum elemento da navbar está ativa.
     for (let i = 0; i < elInVW.length; i++) {
-        if (elInVW[i] == true && !someItemIsActive) {
+        if (elInVW[i] == true && someItemIsActive == false) {
             someItemIsActive = true;
             navbar_item[i].classList.add("navbar__mobile-list-item--active")
             navbarDesktopItem[i].classList.add("navbar__desktop-list-item--active")
