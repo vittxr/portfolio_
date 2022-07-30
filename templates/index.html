@@ -264,39 +264,38 @@
        <p>© 2022 Vitor Roberto</p>
     </footer>
 
-    {% if mail_response %} 
-       <script>
-            var form = document.querySelector(".contact-me__form")
-            var inputs = document.querySelectorAll(".contact-me__input-text")
-            var textarea = document.querySelector(".contact-me__textarea")
+    <script>
+        var form = document.querySelector(".contact-me__form")
+        var inputs = document.querySelectorAll(".contact-me__input-text")
+        var textarea = document.querySelector(".contact-me__textarea")
 
-            form.addEventListener("submit", function() {
-                 submitForm(event)
-            }) 
+        form.addEventListener("submit", function() {
+                submitForm(event)
+        }) 
 
-            function submitForm(evt) {
-                evt.preventDefault();
+        function submitForm(evt) {
+            evt.preventDefault();
 
-                $.ajax({
-                  type: "POST",
-                  url: "/sendMail", 
-                  dataType: "json", 
-                  contentType: "application/json", 
-                  data: JSON.stringify({
-                    name: inputs[0].value,
-                    email: inputs[1].value,
-                    message: textarea.value
-                  }),
-                })
+            $.ajax({
+                type: "POST",
+                url: "/sendMail", 
+                dataType: "json", 
+                contentType: "application/json", 
+                data: JSON.stringify({
+                name: inputs[0].value,
+                email: inputs[1].value,
+                message: textarea.value
+                }),
+            })
 
-                alert("{{ mail_response }}")
+            alert("{{ mail_response }}")
 
-                inputs.forEach((e, index) => {
-                    inputs[index].value = ""
-                })
-                textarea.value = ""                  
-            }
-       </script>
-    {% endif %}
+            inputs.forEach((e, index) => {
+                inputs[index].value = ""
+            })
+            textarea.value = ""                  
+        }
+    </script>
+
 </body>
 </html>
