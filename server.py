@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request 
+from flask import Flask, redirect, render_template, request, url_for 
 from flask_mail import Mail, Message 
 from config import config
 
@@ -9,6 +9,10 @@ mail = Mail(app)
 
 @app.route("/")
 def index(): 
+    mail_response = request.args.get("mail_response")
+    if mail_response: 
+        return render_template("index.html", mail_response=mail_response)
+        
     return render_template("index.html")
 
 @app.route("/sendMail", methods=["POST"])
@@ -28,8 +32,8 @@ def sendMail():
         with app.app_context():
             mail.send(msg)
 
-        return render_template("index.html", mail_response="Email enviado com sucesso! Obrigado pelo contato :).")
-    return render_template("index.html", mail_response="Algo deu errado. Tente novamente, por favor")
+        return redirect(url_for("index", mail_response="Email enviado com sucesso! Obrigado pelo contato :)."))
+    return redirect(url_for("index", mail_response="Algo deu errado. Tente novamente, por favor"))
     
 if __name__ == '__main__':
     app.run(debug=1)
