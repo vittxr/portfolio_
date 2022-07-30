@@ -1,5 +1,4 @@
-from json import dumps
-from flask import Flask, jsonify, redirect, render_template, request, url_for 
+from flask import Flask, redirect, render_template, request, url_for 
 from flask_mail import Mail, Message 
 from config import config
 

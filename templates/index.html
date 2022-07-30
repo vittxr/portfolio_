@@ -285,10 +285,9 @@
                 name: inputs[0].value,
                 email: inputs[1].value,
                 message: textarea.value
-                }),
-            }).done(
-                alert("{{ mail_response }}")
-            )
+                }).done( alert("Email enviado com sucesso! Obrigado pelo contado."))
+                  .fail( alert("Email não enviado. Por favor, tente novamente"))
+            })
 
             inputs.forEach((e, index) => {
                 inputs[index].value = ""
