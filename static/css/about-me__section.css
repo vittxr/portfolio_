@@ -47,3 +47,7 @@
 .about-me__description-box {
     margin-top: 1.5rem;
 }
+
+.about-me__link {
+    text-decoration: underline;
+}

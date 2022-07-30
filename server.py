@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, url_for 
+from json import dumps
+from flask import Flask, jsonify, redirect, render_template, request, url_for 
 from flask_mail import Mail, Message 
 from config import config
 
@@ -12,15 +13,17 @@ def index():
     mail_response = request.args.get("mail_response")
     if mail_response: 
         return render_template("index.html", mail_response=mail_response)
-        
+
     return render_template("index.html")
 
 @app.route("/sendMail", methods=["POST"])
 def sendMail():
-    if request.form: 
-        sender_name=request.form.get("name")
-        sender_email=request.form.get("email")
-        msg_content = request.form.get("msg_content")
+    sender_name=request.get_json("name")
+    sender_email=request.get_json("email")
+    msg_content = request.get_json("message")
+
+    if sender_name and sender_email and msg_content: 
+        print(sender_name, sender_email, msg_content)
 
         msg = Message("Email do Portfolio", sender="vitor.roberto3022@outlook.com", recipients=["vitor.roberto3022@gmail.com"])
 

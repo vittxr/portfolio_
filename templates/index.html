@@ -71,6 +71,8 @@
             <h1 class="introduction__title introduction__title--name">Vitor Roberto</h1>
             <h3 class="introduction__title">FULL-STACK DEVELOPER</h3>
         </div>
+
+        <a target="blank" href="https://www.pexels.com/photo/grayscale-photo-of-a-cat-2574173/">Cat photo by Gijs Coolean</a>
     </section>
 
     <section class="about-me__section" id="sobre">
@@ -99,8 +101,8 @@
 
            <div class="about-me__profile-content-box">
                 <h3 class="about-me__title">OCUPAÇÃO:</h3>
-                <p class="about-me__paragraph">Estudante e Freelancer</p>
-           </div>
+                <p class="about-me__paragraph">Estudante e <a class="about-me__link" href="https://www.workana.com/freelancer/40118e42119416fca8e52a1fd5df5dd9"> Freelancer</a> (Você pode acessar meu perfil do workana, que é um site de freelancer, pelo link) </p>
+           </div> 
          
            <div class="about-me__profile-content-box ">
                 <h3 class="about-me__title">CONTATO:</h3>
@@ -208,7 +210,7 @@
         <h3 class="section__description projects__title">Confira alguns projetos realizados! </h3>
         <h3 class="section__description projects__title">Você pode ver mais sobre eles no meu <a target="blank" href="https://github.com/vittxr">github</a>!</h3>
         <div class="projects__container owl-carousel owl-theme owl-loaded owl-drag">
-            <a target="blank" href="https://niceeapi.herokuapp.com"><div class="projects__item projects__item--web-editor item">
+            <a target="blank" href="https://vittxr.github.io/web-editor/"><div class="projects__item projects__item--web-editor item">
                <h3 class="project__title">Web-editor</h3>
                <p class="project__description">Editor de texto para navegador, usando o summernote do javascript. Foi meu primeiro trabalho como freelancer. Clique aqui para acessar ele! :)</p>
             </div></a>
@@ -264,16 +266,35 @@
 
     {% if mail_response %} 
        <script>
-            const pageAccessedByReload = (
-            (window.performance.navigation && window.performance.navigation.type === 1) ||
-                window.performance
-                .getEntriesByType('navigation')
-                .map((nav) => nav.type)
-                .includes('reload')
-            );
+            var form = document.querySelector(".contact-me__form")
+            var inputs = document.querySelectorAll(".contact-me__input-text")
+            var textarea = document.querySelector(".contact-me__textarea")
 
-            if(!pageAccessedByReload) {
-               alert("{{ mail_response }}")
+            form.addEventListener("submit", function() {
+                 submitForm(event)
+            }) 
+
+            function submitForm(evt) {
+                evt.preventDefault();
+
+                $.ajax({
+                  type: "POST",
+                  url: "/sendMail", 
+                  dataType: "json", 
+                  contentType: "application/json", 
+                  data: JSON.stringify({
+                    name: inputs[0].value,
+                    email: inputs[1].value,
+                    message: textarea.value
+                  }),
+                })
+
+                alert("{{ mail_response }}")
+
+                inputs.forEach((e, index) => {
+                    inputs[index].value = ""
+                })
+                textarea.value = ""                  
             }
        </script>
     {% endif %}

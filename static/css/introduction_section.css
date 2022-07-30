@@ -28,3 +28,9 @@
 .introduction__title--name {
     font-size: 4rem;
 }
+
+.introduction__section a {
+    position: absolute;
+    bottom: 10rem;
+    right: 1rem;
+}
