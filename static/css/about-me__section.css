@@ -1,6 +1,6 @@
 .about-me__section {
     /* width: 100vw; */
-    height: 55%;
+    /* height: 80rem; */
     display: flex;
     flex-direction: column;
     margin: 4rem 0.5rem 0 0.5rem;
@@ -37,7 +37,8 @@
 }
 
 .about-me__profile-content-box {
-    height: 83px;
+    /* height: 83px; */
+    margin: 1rem 0;
 }
 
 /* .about-me__profile-content-box .about-me__paragraph {

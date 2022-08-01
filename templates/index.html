@@ -284,15 +284,14 @@
                 data: JSON.stringify({
                 name: inputs[0].value,
                 email: inputs[1].value,
-                message: textarea.value
-                }).done( alert("Email enviado com sucesso! Obrigado pelo contado."))
-                  .fail( alert("Email não enviado. Por favor, tente novamente"))
-            })
+                message: textarea.value   
+                })
+            }).done( alert("Email enviado com sucesso! Obrigado pelo contado."))          
 
             inputs.forEach((e, index) => {
                 inputs[index].value = ""
             })
-            textarea.value = ""                  
+            textarea.value = ""  
         }
     </script>
 
